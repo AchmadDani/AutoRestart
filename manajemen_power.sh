@@ -24,30 +24,26 @@ case $pilihan in
         fi
         ;;
         
-        2)
-        read -p "Masukkan waktu shutdown (dalam detik): " waktu
+       2)
+    read -p "Masukkan waktu shutdown (dalam detik): " waktu
 
-        if [[ $waktu -lt 0 ]]; then
-            echo "❌ Waktu tidak boleh kurang dari 0!"
-            exit 1
-        fi
+    if [[ $waktu -lt 0 ]]; then
+        echo "❌ Waktu tidak boleh kurang dari 0!"
+        exit 1
+    fi
 
-        menit=$(( (waktu + 59) / 60 ))
+    echo "Sistem akan shutdown dalam $waktu detik."
+    echo "Ketik 'c' lalu ENTER untuk membatalkan."
 
-        shutdown -h +$menit
+    read -t $waktu batal
 
-        echo "Sistem akan shutdown dalam $waktu detik."
-        echo "Ketik 'c' lalu ENTER untuk membatalkan shutdown."
-
-        read -t $waktu batal
-
-        if [[ $batal == "c" || $batal == "C" ]]; then
-            shutdown -c
-            echo "✅ Shutdown terjadwal dibatalkan."
-        else
-            echo "⏳ Waktu habis, shutdown tetap berjalan."
-        fi
-        ;;
+    if [[ $batal == "c" || $batal == "C" ]]; then
+        echo "✅ Shutdown dibatalkan."
+    else
+        echo "⏳ Waktu habis, sistem dimatikan sekarang."
+        shutdown -h now
+    fi
+    ;;
         
     3)
         read -p "Apakah Anda yakin ingin reboot sekarang? (y/n): " konfirmasi
