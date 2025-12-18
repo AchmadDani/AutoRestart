@@ -24,19 +24,24 @@ case "$pilihan" in
         ;;
         
     2)
-        read -p "Masukkan waktu shutdown (dalam detik): " waktu
-        
-        if [[ "$waktu" =~ ^[0-9]+$ ]]; then
-            if [[ "$waktu" -gt 0 ]]; then
-                echo "Sistem akan dimatikan dalam $waktu detik..."
-                sudo shutdown -h +"$((waktu/60))"
-            else
-                echo "Waktu tidak boleh 0 atau kurang."
-            fi
-        else
-            echo "Input tidak valid! Harus berupa angka."
-        fi
-        ;;
+    read -p "Masukkan waktu shutdown (dalam detik): " waktu
+
+    if [[ "$waktu" =~ ^[0-9]+$ ]] && [[ "$waktu" -gt 0 ]]; then
+        echo "Sistem akan dimatikan dalam $waktu detik."
+        echo "Tekan Ctrl+C untuk membatalkan."
+
+        while [ "$waktu" -gt 0 ]; do
+            echo -ne "Shutdown dalam $waktu detik...\r"
+            sleep 1
+            ((waktu--))
+        done
+
+        echo -e "\nWaktu habis. Sistem dimatikan sekarang."
+        sudo shutdown -h now
+    else
+        echo "Input tidak valid! Masukkan angka > 0."
+    fi
+    ;;
         
     3)
         read -p "Apakah Anda yakin ingin reboot sekarang? (y/n): " konfirmasi
