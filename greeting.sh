@@ -1,7 +1,11 @@
 #!/bin/bash
 
-## gunakan perintah USER untuk memunculkan user saat ini
+# Menyapa user
+echo "Hai User"
 
-## gunakan perintah date untuk memunculkan tanggal dan waktu sekarang
+# Menampilkan tanggal hari ini
+echo "Hari ini adalah $(date)"
 
-## gunakan perintah who untuk memunculkan user-user yang sedang login
+# Menampilkan user yang sedang login
+echo "User yang sedang login saat ini adalah:"
+who
